@@ -21,23 +21,23 @@ function makeColor(lightness: number, chroma: number, hue: number): Color {
 	return { space: OKLCH, coords: [lightness, chroma, hue] }
 }
 
-function makeSwatch(lightnessRange: NumberRange, swatchRecipe: SwatchRecipe, length: number): Swatch {
+function makeSwatch(
+	lightnessRange: NumberRange,
+	swatchRecipe: SwatchRecipe,
+	length: number
+): Swatch {
 	registerColorSpaces()
 
 	const { from: baseLightness, to: targetLightness } = lightnessRange
 	const { chroma, hue } = swatchRecipe
 
-    const baseColor = makeColor(baseLightness, chroma, hue)
-    const targetColor = makeColor(targetLightness, chroma, hue)
-	
-	return steps(
-		baseColor,
-		targetColor,
-		{
-			space: OKLCH,
-			outputSpace: OKLCH,
-			steps: length,
-			maxSteps: length
-		}
-	)
+	const baseColor = makeColor(baseLightness, chroma, hue)
+	const targetColor = makeColor(targetLightness, chroma, hue)
+
+	return steps(baseColor, targetColor, {
+		space: OKLCH,
+		outputSpace: OKLCH,
+		steps: length,
+		maxSteps: length
+	})
 }
